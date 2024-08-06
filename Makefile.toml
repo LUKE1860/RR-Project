@@ -1,0 +1,33 @@
+[tasks.rust-executable]
+command="cargo"
+args=["build"]
+#[tasks.rust-command]
+#command="cargo"
+#args=["r","1920","1080","hello"]
+[tasks.move-dll]
+script_runner="@shell"
+script="move ${CARGO_MAKE_WORKING_DIRECTORY}\\target\\debug\\interop.dll ${CARGO_MAKE_WORKING_DIRECTORY}\\src\\"
+[tasks.move-settings]
+script_runner="@shell"
+script="move ${CARGO_MAKE_WORKING_DIRECTORY}\\Settings.toml ${CARGO_MAKE_WORKING_DIRECTORY}\\src\\"
+[tasks.racket-executable]
+#cwd changes the directory
+cwd="./src/"
+command="racket"
+args=["main.rkt"]
+[tasks.remove-dll]
+script_runner="@shell"
+script="rm ${CARGO_MAKE_WORKING_DIRECTORY}\\src\\interop.dll"
+[tasks.remove-settings]
+script_runner="@shell"
+script="rm ${CARGO_MAKE_WORKING_DIRECTORY}\\src\\Settings.toml"
+[tasks.whole-process]
+dependencies=[
+#"rust-command",
+"rust-executable",
+"move-dll",
+"move-settings",
+"racket-executable",
+"remove-dll",
+"remove-settings",
+]
